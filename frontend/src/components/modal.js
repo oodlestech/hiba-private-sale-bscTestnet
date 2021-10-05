@@ -16,7 +16,6 @@ const [modal, setModal] = useState(false);
 const toggle = () => setModal(!modal);
 
 const {
-    buttonLabel,
     className
 } = props;
 

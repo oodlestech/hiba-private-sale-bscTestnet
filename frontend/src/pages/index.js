@@ -10,7 +10,6 @@ import { TrendingUp } from 'react-feather';
 
 export default function Home( props ) {
 
-    const mnemonic = process.env.MNEMONIC;
     const [stakingPool, setStakingPool] = useState(undefined);
     const [signerAddress, setSignerAddress] = useState(undefined);
     const [amountInvested, setAmountInvested] = useState(undefined);

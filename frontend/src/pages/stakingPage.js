@@ -5,20 +5,10 @@ import Layout from '../components/layout';
 import Header from '../components/header';
 import Sidebar from '../components/sidebar';
 import Footer from '../components/footer';
-import {
-    Form,
-    FormGroup,
-    Input,
-} from 'reactstrap';
+
 import PageModal from '../components/modal';
 
 export default function Staking( props ) {
-
-    const [ isLoading, setLoading ] = useState(false);
-
-    useEffect(() => {
-
-    }, [])
 
     const [stakingPool, setStakingPool] = useState(undefined);
     const [signerAddress, setSignerAddress] = useState(undefined);
@@ -63,7 +53,7 @@ export default function Staking( props ) {
     };
 
     return(
-         <Layout title="Hiba Sale" loading={isLoading}>
+         <Layout title="Hiba Sale">
         
             <div className='page-wrapper'>
                 <Header />

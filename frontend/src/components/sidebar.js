@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Image from './image';
-import {Input} from 'reactstrap';
 import { Send } from 'react-feather';
 import { Twitter } from 'react-feather';
 import { BookOpen } from 'react-feather';

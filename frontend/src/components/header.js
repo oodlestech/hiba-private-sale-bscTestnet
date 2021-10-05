@@ -5,9 +5,9 @@ import SideBarToggle from '../js/sideBarToggle.js';
 import ToggleFullScreen from '../js/toggleFullScreen.js';
 import { NavMenuToggle, NavMenuToggleLeft } from '../js/navMenuToggle.js';
 import { Maximize } from 'react-feather';
-import { Link} from "react-router-dom";
+// import { Link} from "react-router-dom";
 import { MoreHorizontal } from 'react-feather';
-import { LogOut } from 'react-feather';
+// import { LogOut } from 'react-feather';
 
 
 export default function Header(props) {
@@ -31,7 +31,7 @@ export default function Header(props) {
             <div className="nav-right col left-menu-header">
                 <ul className="nav-menus-left">
                     
-                    <li><a className="text-dark" href="#" onClick={() => ToggleFullScreen() }> <Maximize /> </a></li>
+                    <li><span className="text-dark" style={{cursor : 'pointer'}} onClick={() => ToggleFullScreen() }> <Maximize /> </span></li>
                     
                     {/* <li><Link to="/">Buy</Link></li> */}
                     
