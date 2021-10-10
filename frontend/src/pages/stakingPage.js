@@ -30,17 +30,17 @@ export default function Staking( props ) {
         || typeof signerAddress === 'undefined'
         || typeof amountInvested === 'undefined'
     ) {
-        // return (
-        // //  Loader starts
-        // // <div className="loader-wrapper">
-        // //     <div className="loader loader-7">
-        // //     <div className="line line1"></div>
-        // //     <div className="line line2"></div>
-        // //     <div className="line line3"></div>
-        // //     </div>
-        // // </div>
-        // //  Loader ends
-        // );
+        return (
+        //  Loader starts
+        <div className="loader-wrapper">
+            <div className="loader loader-7">
+            <div className="line line1"></div>
+            <div className="line line2"></div>
+            <div className="line line3"></div>
+            </div>
+        </div>
+        //  Loader ends
+        );
     }
 
     const invest = async e => {
@@ -70,39 +70,21 @@ export default function Staking( props ) {
                     
                         <div className="container-fluid">
                             <div className="row">
-                            <div className="col-sm-12 col-lg-6 col-xl-8 xl-50 col-md-12 box-col-6" style={{margin : '20px auto 0'}}>
-                                <div className="card height-equal">
-                                <div className="card-header">
-                                    <h5>Buy Hiba</h5>
-                                </div>
-                                <div className="contact-form card-body">
-                                   
-                                    <div className='row'>
-                                        <div className='col-sm-12'>
-                                        <h5 className="card-title">Invest</h5>
-                                        <form className="form-inline" onSubmit={e => invest(e)}>
-                                            <input 
-                                            type="text" 
-                                            className="form-control mb-2 mr-sm-2" 
-                                            placeholder="Investment amount (BNB)"
-                                            />
-                                            <button 
-                                            type="submit" 
-                                            className="btn btn-primary mb-2"
-                                            >
-                                            Submit
-                                            </button>
-                                        </form>
+                                <div className="col-sm-12 col-lg-6 col-xl-8 xl-50 col-md-12 box-col-6" style={{margin : '20px auto 0'}}>
+                                    <div className="card height-equal">
+                                        <div className="card-header">
+                                            <h5>Staking</h5>
+                                        </div>
+                                        <div className="contact-form card-body">
+                                        
+                                            <div className='row'>
+                                                <h5 className="card-title" onClick={e => invest(e)}>Coming soon</h5>
+
+                                            </div>
+
                                         </div>
                                     </div>
-
-                                    <div className='row'>
-                                        <h2>Your Investment: {amountInvested.toString()} BNB</h2>
-                                    </div>
-                                    {/*  </form>  */}
                                 </div>
-                                </div>
-                            </div>
                             </div>
                         </div>
                         {/*  Container-fluid Ends */}

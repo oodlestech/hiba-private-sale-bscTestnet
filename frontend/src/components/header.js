@@ -3,7 +3,7 @@ import Image from './image';
 import {Input} from 'reactstrap';
 import SideBarToggle from '../js/sideBarToggle.js';
 import ToggleFullScreen from '../js/toggleFullScreen.js';
-import { NavMenuToggle, NavMenuToggleLeft } from '../js/navMenuToggle.js';
+import { NavMenuToggleLeft } from '../js/navMenuToggle.js';
 import { Maximize } from 'react-feather';
 // import { Link} from "react-router-dom";
 import { MoreHorizontal } from 'react-feather';
@@ -22,7 +22,7 @@ export default function Header(props) {
             <div className="mobile-sidebar d-block">
             <div className="media-body text-right switch-sm">
                 <label className="switch">
-                    <Input  type="checkbox" id="sidebar-toggle" defaultChecked onClick={() => SideBarToggle() } />
+                    <Input  type="checkbox" id="sidebar-toggle" onClick={() => SideBarToggle() } />
                     <span className="switch-state"></span>
                 </label>
             </div>
@@ -61,7 +61,7 @@ export default function Header(props) {
                 </ul>
             </div>
             
-            <div className="d-lg-none mobile-toggle pull-right" onClick={() => NavMenuToggle() }><MoreHorizontal /></div>
+            {/* <div className="d-lg-none mobile-toggle pull-right" onClick={() => NavMenuToggle() }><MoreHorizontal /></div> */}
         </div>
     </div>
     // <!-- Page Header Ends --></div>

@@ -26,7 +26,7 @@ useEffect(() => {
   return(
 
 <Modal isOpen={modal} toggle={toggle} className={className}>
-    <ModalHeader toggle={toggle}>Club Fixtures</ModalHeader>
+    <ModalHeader toggle={toggle}>Alert</ModalHeader>
     <ModalBody>
         <div>alert</div>
     </ModalBody>

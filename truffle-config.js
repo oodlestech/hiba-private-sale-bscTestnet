@@ -1,6 +1,3 @@
-require('dotenv').config();
-const HDWalletProvider = require('@truffle/hdwallet-provider');
-const mnemonic = process.env.MNEMONIC2;
 /**
  * Use this file to configure your truffle project. It's seeded with some
  * common settings for different networks and features like migrations,
@@ -27,6 +24,11 @@ const mnemonic = process.env.MNEMONIC2;
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
 
+require('dotenv').config();
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+const mnemonic = process.env.MNEMONIC;
+const live_mnemonic = process.env.LIVE_MNEMONIC;
+
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -46,11 +48,32 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    // development: {
-    //  host: "127.0.0.1",     // Localhost (default: none)
-    //  port: 8545,            // Standard Ethereum port (default: none)
-    //  network_id: "*",       // Any network (default: none)
-    // },
+    development: {
+     host: "127.0.0.1",     // Localhost (default: none)
+     port: 8545,            // Standard Ethereum port (default: none) //ganache cli
+    //  port: 9545,            // Truffle local network port (default: none)
+    //  port: 7545,            // Ganache GUI (default: none) can be configured to 9545 to make it the default for truffle instead of ganache cli
+     network_id: "*",       // Any network (default: none)
+    //  from: <address>,       // Account to send txs from (default: accounts[0])
+     websockets: true        // Enable EventEmitter interface for web3 (default: false)
+    },
+    live: {
+      host: "178.25.19.88", // Random IP for example purposes (do not use)
+      port: 80,
+      network_id: 1,        // Ethereum public network
+      // optional config values:
+      // gas
+      // gasPrice
+      // from - default address to use for any transaction Truffle makes during migrations
+      // provider - web3 provider instance Truffle should use to talk to the Ethereum network.
+      //          - function that returns a web3 provider instance (see below.)
+      //          - if specified, host and port are ignored.
+      // skipDryRun: - true if you don't want to test run the migration locally before the actual migration (default is false)
+      // confirmations: - number of confirmations to wait between deployments (default: 0)
+      // timeoutBlocks: - if a transaction is not mined, keep waiting for this number of blocks (default is 50)
+      // deploymentPollingInterval: - duration between checks for completion of deployment transactions
+      // disableConfirmationListener: - true to disable web3's confirmation listener
+    },
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
@@ -78,10 +101,10 @@ module.exports = {
     // }
     bsc: {
       provider: () => new HDWalletProvider(
-        mnemonic, 
+        live_mnemonic, 
         'https://bsc-dataseed.binance.org/'
       ),
-      gas : 522695,
+      gas : 1047219,
       gasPrice : 10 * 10 ** 9,
       network_id: 56,
       skipDryRun: true
@@ -92,8 +115,6 @@ module.exports = {
         'https://data-seed-prebsc-2-s1.binance.org:8545'
       ),
       network_id: 97,
-      // confirmations: 2,
-      // timeoutBlocks: 2000,
       skipDryRun: true,
       networkCheckTimeout: 1000000
     }

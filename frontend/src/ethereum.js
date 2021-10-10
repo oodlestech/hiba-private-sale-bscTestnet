@@ -1,6 +1,7 @@
 import detectEthereumProvider from '@metamask/detect-provider';
 import { ethers, Contract } from 'ethers';
-import StakingPool from './contracts/StakingPool.json';
+import HibaSale from './contracts/HibaSale.json';
+import Token from './contracts/Token.json';
 
 const getBlockchain = () =>
   new Promise( async (resolve, reject) => {
@@ -11,13 +12,19 @@ const getBlockchain = () =>
       provider = new ethers.providers.Web3Provider(provider);
       const signer = provider.getSigner();
       const signerAddress = await signer.getAddress();
-
-      const stakingPool = new Contract(
-        StakingPool.networks[networkId].address,
-        StakingPool.abi,
+  
+      const hibaSale = new Contract(
+        HibaSale.networks[networkId].address,
+        HibaSale.abi,
         signer
       );
-      resolve({signerAddress, stakingPool});
+
+      const token = new Contract(
+        Token.networks[networkId].address,
+        Token.abi,
+        signer
+      );
+      resolve({signerAddress, hibaSale, token});
       return;
     }
     reject('Install Metamask');

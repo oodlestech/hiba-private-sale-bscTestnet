@@ -58,7 +58,6 @@ import './js/tooltip-init.js';
 import './js/script.js';
 import './js/theme-customizer/customizer.js';
 
-
 ReactDOM.render(
   <React.StrictMode>
     <App />
