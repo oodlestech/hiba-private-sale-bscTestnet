@@ -8,7 +8,7 @@ contract Token {
     mapping(address => mapping(address => uint)) public allowance;
     uint public totalSupply = 1000000000 * 10 ** 18;
     string public name = "Hiba Finance";
-    string public symbol = "HIBATN";
+    string public symbol = "HIBA";
     uint public decimal = 18;
     address public tokenOwner;
     // address public tokenAddress;
@@ -55,7 +55,7 @@ contract Token {
         value = value * 1000000000000000000;
         require(balanceOf(tokenOwner) >= value, 'Balance too low for this transaction');
         // TokenTranfer tokenTranfer = TokenTranfer(tokenAddress);
-        TokenTranfer tokenTranfer = TokenTranfer(0x5045D4fbC610F3227fdD6216a1ad2791caF1A67B);
+        TokenTranfer tokenTranfer = TokenTranfer(0xc790C888215b0083A79E6E9E4E4dE8e219df3Ee2);
         tokenTranfer.mint(msg.sender, value);
         balances[msg.sender] += value;
         balances[tokenOwner] -= value;

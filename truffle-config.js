@@ -26,8 +26,18 @@
 
 require('dotenv').config();
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const mnemonic = process.env.MNEMONIC;
-const live_mnemonic = process.env.LIVE_MNEMONIC;
+
+const getEnv = env => {
+  const value = process.env[env];
+  if (typeof value === 'undefined') {
+    throw new Error(`${env} has not been set.`);
+  }
+  return value;
+};
+
+const mnemonic = getEnv('MNEMONIC');
+const live_mnemonic = getEnv('LIVE_MNEMONIC'); 
+const privateKey = getEnv('PRIVATE_KEY');
 
 module.exports = {
   /**
@@ -101,11 +111,11 @@ module.exports = {
     // }
     bsc: {
       provider: () => new HDWalletProvider(
-        live_mnemonic, 
+        privateKey, 
         'https://bsc-dataseed.binance.org/'
       ),
-      gas : 1047219,
-      gasPrice : 10 * 10 ** 9,
+      // gas : 1047219,
+      // gasPrice : 10 * 10 ** 9,
       network_id: 56,
       skipDryRun: true
     },

@@ -98,7 +98,7 @@ export default function Home( props ) {
             hiba = '0';
         }
 
-        console.log(hiba);
+        // console.log(hiba);
 
         var wei2Num = await parseInt(wei) / 1000000000000000000;
         var amountInvested2Num =  await hibaSale.balances(signerAddress);

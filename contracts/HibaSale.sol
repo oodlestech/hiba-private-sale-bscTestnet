@@ -6,9 +6,11 @@ contract HibaSale {
     
     mapping(address => uint) public balances;
     address payable public owner;
-    address payable public coOwner = payable(0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2);
+    // testnet 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2
+    // mainnet 0xB0274A52D7cF71Ac50D8cDC1c1479D777E29C564
+    address payable public coOwner = payable(0xB0274A52D7cF71Ac50D8cDC1c1479D777E29C564);
     
-    constructor () public{
+    constructor () {
         owner = payable(msg.sender);
     }
 
