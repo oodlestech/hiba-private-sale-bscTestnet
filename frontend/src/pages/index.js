@@ -33,7 +33,7 @@ export default function Home( props ) {
                   const { hibaSale, hibaToken } = await getContract(metamaskInstance);
 
                   const accounts = await provider.listAccounts();
-                  console.log(accounts, "accounts");
+
                   if (accounts.length > 0) {
                     setSignerAddress(accounts[0]);
                   } else {
@@ -60,11 +60,7 @@ export default function Home( props ) {
     }, [window.ethereum]);
 
     React.useEffect(() => {
-        console.log(
-          "here",
-          token && hibaSale && signerAddress,
-          token , hibaSale, signerAddress,
-        );
+
         if (token !== undefined && hibaSale !== undefined && signerAddress !== undefined) {
 
             (async () => {
