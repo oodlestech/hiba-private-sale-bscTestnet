@@ -36,7 +36,7 @@ const getEnv = env => {
 };
 
 const mnemonic = getEnv('MNEMONIC');
-const live_mnemonic = getEnv('LIVE_MNEMONIC'); 
+const live_mnemonic = getEnv('LIVE_MNEMONIC');
 const privateKey = getEnv('PRIVATE_KEY');
 
 module.exports = {
@@ -111,7 +111,7 @@ module.exports = {
     // }
     bsc: {
       provider: () => new HDWalletProvider(
-        privateKey, 
+        privateKey,
         'https://bsc-dataseed.binance.org/'
       ),
       // gas : 1047219,
@@ -121,7 +121,7 @@ module.exports = {
     },
     bscTestnet: {
       provider: () => new HDWalletProvider(
-        mnemonic, 
+        privateKey,
         'https://data-seed-prebsc-2-s1.binance.org:8545'
       ),
       network_id: 97,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import getBlockchain from '../ethereum.js';
+import {getBlockchain} from '../ethereum.js';
 
 import Layout from '../components/layout';
 import Header from '../components/header';
@@ -17,12 +17,12 @@ export default function Staking( props ) {
     useEffect(() => {
         const init = async () => {
         const { signerAddress, stakingPool } = await getBlockchain();
-        const amountInvested = await stakingPool.balances(signerAddress); 
+        const amountInvested = await stakingPool.balances(signerAddress);
         setStakingPool(stakingPool);
         setSignerAddress(signerAddress);
         setAmountInvested(amountInvested);
         };
-        init();
+        // init();
     }, []);
 
     if(
@@ -48,16 +48,16 @@ export default function Staking( props ) {
         await stakingPool.invest(
         {value: e.target.elements[0].value}
         );
-        const amountInvested = await stakingPool.balances(signerAddress); 
+        const amountInvested = await stakingPool.balances(signerAddress);
         setAmountInvested(amountInvested);
     };
 
     return(
          <Layout title="Hiba Sale">
-        
+
             <div className='page-wrapper'>
                 <Header />
-                
+
                 {/*  Page Body Start */}
                 <div className="page-body-wrapper">
 
@@ -65,9 +65,9 @@ export default function Staking( props ) {
 
                     {/*  Page Body Start */ }
                     <div className="page-body">
-                    
+
                         {/*  Container-fluid starts */}
-                    
+
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="col-sm-12 col-lg-6 col-xl-8 xl-50 col-md-12 box-col-6" style={{margin : '20px auto 0'}}>
@@ -76,7 +76,7 @@ export default function Staking( props ) {
                                             <h5>Staking</h5>
                                         </div>
                                         <div className="contact-form card-body">
-                                        
+
                                             <div className='row'>
                                                 <h5 className="card-title" onClick={e => invest(e)}>Coming soon</h5>
 
@@ -92,13 +92,13 @@ export default function Staking( props ) {
 
                     <Footer />
 
-                </div> 
+                </div>
 
                 < PageModal/>
-            
+
             </div>
-    
-        </Layout>   
-               
+
+        </Layout>
+
     )
 }

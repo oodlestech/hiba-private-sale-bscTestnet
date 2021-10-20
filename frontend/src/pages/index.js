@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import getBlockchain from '../ethereum.js';
+import {getBlockchain, getContract, getBNBPrice} from '../ethereum.js';
 import convertBnb2Wei from '../convertBnb2Wei.js';
 import getHibaValue from '../getHibaValue.js';
 import Layout from '../components/layout';
@@ -21,39 +21,61 @@ export default function Home( props ) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [bnb2usdLatestPrice, setbnb2usdLatestPrice] = useState([]);
-    
-    useEffect(() => {
-        const init = async () => {
-        const { signerAddress, hibaSale, token } = await getBlockchain();
-        const amountInvested = await hibaSale.balances(signerAddress);
-        const hibaAmount = await token.balances(signerAddress);
 
-        fetch("https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd")
-        .then(res => res.json())
-        .then(
-            (result) => {
-            setIsLoaded(true);
-            var bnbusd = result;
-            setbnb2usdLatestPrice(bnbusd.binancecoin.usd);
-            },
-            // Note: it's important to handle errors here
-            // instead of a catch() block so that we don't swallow
-            // exceptions from actual bugs in components.
-            (error) => {
-            setIsLoaded(true);
-            setError(error);
-            }
-        )
 
-        setHibaSale(hibaSale);
-        setToken(token);
-        setSignerAddress(signerAddress);
-        setAmountInvested(amountInvested);
-        setHibaAmount(hibaAmount);
+    React.useEffect(() => {
+        const metamaskInstance = window.ethereum;
+        if (metamaskInstance){
 
-        };
-        init();
-    }, []);
+          (async () => {
+              try {
+                  const { provider, networkId } = await getBlockchain(metamaskInstance);
+                  const { hibaSale, hibaToken } = await getContract(metamaskInstance);
+
+                  const accounts = await provider.listAccounts();
+                  console.log(accounts, "accounts");
+                  if (accounts.length > 0) {
+                    setSignerAddress(accounts[0]);
+                  } else {
+                    // ask user to connect thier metamask
+                    const a = await window.ethereum.enable();
+                    setSignerAddress(a[0]);
+                  }
+
+                  const bnbPrice = await getBNBPrice();
+                  setbnb2usdLatestPrice(bnbPrice);
+
+                  setHibaSale(hibaSale);
+                  setToken(hibaToken);
+
+              } catch (error) {
+                //   error.code = 4001 - when user reject connection to metamask
+                console.log(error, "error");
+              }
+          })();
+        }else{
+            // todo
+            // ask user to install metamask
+        }
+    }, [window.ethereum]);
+
+    React.useEffect(() => {
+        console.log(
+          "here",
+          token && hibaSale && signerAddress,
+          token , hibaSale, signerAddress,
+        );
+        if (token !== undefined && hibaSale !== undefined && signerAddress !== undefined) {
+
+            (async () => {
+              // const amountInvested = await hibaSale.balances(signerAddress);
+              const hibaAmount = await token.balanceOf(signerAddress);
+              setAmountInvested(0);
+              setHibaAmount(hibaAmount);
+            })()
+        }
+    }, [token, hibaSale, signerAddress]);
+
 
 
     if(
@@ -65,15 +87,15 @@ export default function Home( props ) {
             'loading signer details'
         );
     }
-    
-    
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-        return <div>Loading token details</div>;
-    } else {
-        
-    }
+
+
+    // if (error) {
+    //     return <div>Error: {error.message}</div>;
+    // } else if (!isLoaded) {
+    //     return <div>Loading token details</div>;
+    // } else {
+
+    // }
 
     const exchange = async e => {
         e.preventDefault();
@@ -104,7 +126,7 @@ export default function Home( props ) {
         var amountInvested2Num =  await hibaSale.balances(signerAddress);
         amountInvested2Num =  await parseInt(amountInvested2Num)  / 1000000000000000000;
 
-        
+
         var error_msg = document.getElementById('error_msg');
 
         if ( wei2Num < 0.025 ) {
@@ -114,7 +136,7 @@ export default function Home( props ) {
         else if ( wei2Num > 20 ) {
             error_msg.innerHTML = 'BNB amount cannot be more than 20';
         }
-        
+
         else if ( (amountInvested2Num + (wei / 1000000000000000000)) > 20 ) {
             error_msg.innerHTML = 'Total purchase amount in BNB cannot be more than 20';
         }
@@ -129,25 +151,25 @@ export default function Home( props ) {
         await tx.wait();
 
         const tx2 = await token.transferToken(
-        // {value : 
+        // {value :
         hiba
         // }
         );
         await tx2.wait();
 
-        var amountInvested = await hibaSale.balances(signerAddress); 
+        var amountInvested = await hibaSale.balances(signerAddress);
         setAmountInvested(amountInvested);
-        var hibaAmount = await token.balances(signerAddress); 
-        setHibaAmount(hibaAmount);  
+        var hibaAmount = await token.balances(signerAddress);
+        setHibaAmount(hibaAmount);
 
     };
 
     return(
         <Layout title="Hiba Sale">
-        
+
             <div className='page-wrapper'>
                 <Header />
-                
+
                 {/*  Page Body Start */}
                 <div className="page-body-wrapper">
 
@@ -155,24 +177,24 @@ export default function Home( props ) {
 
                     {/*  Page Body Start */ }
                     <div className="page-body">
-                    
+
                         {/*  Container-fluid starts */}
-                    
+
                         <div className="container-fluid">
                             <div className="row">
-                                
+
                                 <div className="col-sm-12 col-lg-8 col-xl-6 xl-50 col-md-12 box-col-12" style={{margin : '20px auto 0'}}>
                                     <div className="card height-equal">
-                                        
+
                                         <div className="card-header">
                                             <h5>BNB Amount</h5>
                                         </div>
                                         <form className="form-inline" onSubmit={e => exchange(e)}>
                                             <div className="contact-form card-body">
-                                            
+
                                                 <div className="input-group">
                                                     <Input type="text" name="bnbAmount" id="bnbAmount" className="form-control" placeholder="eg : 1" />
-                                                    
+
                                                     <button type="submit" className="btn btn-primary-gradien" >Buy HIBA</button>
                                                 </div>
 
@@ -198,7 +220,7 @@ export default function Home( props ) {
                                                             </div>
                                                         </div>
                                                         <div className="progress sm-progress-bar progress-animate">
-                                                           
+
                                                         </div>
                                                         <span className="tag-content-secondary tag-hover-effect"><TrendingUp /></span>
                                                     </div>
@@ -217,7 +239,7 @@ export default function Home( props ) {
                                                             </div>
                                                         </div>
                                                         <div className="progress sm-progress-bar progress-animate">
-                                                           
+
                                                         </div>
                                                         <span className="tag-content-secondary tag-hover-effect"><TrendingUp /></span>
                                                     </div>
@@ -234,12 +256,12 @@ export default function Home( props ) {
 
                     <Footer />
 
-                </div> 
+                </div>
 
                 < PageModal/>
-            
+
             </div>
-    
-        </Layout>             
+
+        </Layout>
     )
 }

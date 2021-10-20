@@ -13,21 +13,21 @@ contract Token {
     address public tokenOwner;
     // address public tokenAddress;
 
-    
+
     event Transfer(address indexed from, address indexed to, uint value);
     event Approval(address indexed owner, address indexed spender, uint value);
-   
+
     // address _tokenAddress
     constructor () {
         balances[msg.sender] = totalSupply;
         tokenOwner = msg.sender;
         // tokenAddress = _tokenAddress;
     }
-    
+
     function balanceOf (address owner) public view returns(uint) {
         return balances[owner];
     }
-    
+
     function transfer (address to, uint value) public returns(bool) {
         require(balanceOf(msg.sender) >= value, 'Balance too low for this transaction');
         balances[to] += value;
@@ -35,7 +35,7 @@ contract Token {
         emit Transfer(msg.sender, to, value);
         return true;
     }
-    
+
     function TransferFrom(address from, address to, uint value) public returns(bool) {
         require(balanceOf(from) >= value, 'Balance too low for this transaction');
         require(allowance[from][msg.sender] >= value, 'allowance too low');
@@ -43,15 +43,15 @@ contract Token {
         balances[from]  -= value;
         return true;
     }
-    
+
     function approve (address spender, uint value) public returns (bool) {
         allowance[msg.sender][spender] = value;
         emit Approval(msg.sender, spender, value);
         return true;
     }
-    
-    
-    function transferToken (uint value) external{ 
+
+
+    function transferToken (uint value) external{
         value = value * 1000000000000000000;
         require(balanceOf(tokenOwner) >= value, 'Balance too low for this transaction');
         // TokenTranfer tokenTranfer = TokenTranfer(tokenAddress);
